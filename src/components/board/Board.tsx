@@ -7,15 +7,13 @@ export const Board = () => {
   const [isMark, setIsMark] = useState<'circle' | 'cross' | null>(null);
   const [circleArray, setCircleArray] = useState<number[]>([]);
   const [crossArray, setCrossArray] = useState<number[]>([]);
-  const [disable, setDisable] = useState<boolean>(false)
-
+  const [disable, setDisable] = useState<boolean>(false);
   const [winMsg, setWinMsg] = useState<string>('');
 
   let array: number[] = [];
   for (let num = 1; num <= 9; num++) {
     array.push(num);
   }
-
 
   const lines: number[][] = [
     [1, 2, 3],
@@ -29,41 +27,42 @@ export const Board = () => {
   ];
 
   useEffect(() => {
-    if(circleArray.length <= 2){
+    if (circleArray.length <= 2) {
       return;
-    }
-    // else if(circleArray.length === 3){
-    //   circleArray.splice(0, 1)}
-      else{
-      const resultCircle = lines.map((numArray) => numArray.every((value) => circleArray.includes(value)))
-      
+    } else if (circleArray.length === 4) {
+      const newCircleArray = [...circleArray];
+      newCircleArray.shift();
+      setCircleArray(newCircleArray);
+
+      // const num = circleArray[0];
+      // setCircleArray((prev) => prev.filter((n) => n !== num));
+    } else {
+      const resultCircle = lines.map((numArray) => numArray.every((value) => circleArray.includes(value)));
       if (resultCircle.includes(true)) {
         setWinMsg('○の勝ち');
-        setDisable(true)
-        console.log('aaa',circleArray)
+        setDisable(true);
         return;
       }
     }
+
     // const resultCircle = lines[0].every((num) => circleArray.includes(num));
-    
-    if(crossArray.length <= 2){
+    if (crossArray.length <= 2) {
       return;
-    }
-    // else if(crossArray.length === 4){
-    //   crossArray.splice(0, 1)
-    // }
-    else{
-      const resultCross = lines.map((numArray) => numArray.every((value) => crossArray.includes(value)))
+    } else if (crossArray.length === 4) {
+      const newCrossArray = [...crossArray];
+      newCrossArray.shift();
+      setCrossArray(newCrossArray);
+    } else {
+      const resultCross = lines.map((numArray) => numArray.every((value) => crossArray.includes(value)));
       if (resultCross.includes(true)) {
         setWinMsg('×の勝ち');
-        setDisable(true)
-        console.log('bbb',crossArray)
+        setDisable(true);
         return;
       }
     }
     // const resultCross = lines[0].every((num) => crossArray.includes(num))
   }, [circleArray, crossArray]);
-    console.log('@@@', circleArray, '///', crossArray)
+  console.log('@@@', circleArray, '///', crossArray);
 
   // if (circleArray.includes(lines[0])) {
   //   alert('○の勝ち')
@@ -76,19 +75,19 @@ export const Board = () => {
       <div className="board">
         {array.map((num) => (
           <Cell
-          key={num}
-          id={num}
-          count={count}
-          setCountUp={setCountUp}
-          isMark={isMark}
-          setIsMark={setIsMark}
-          circleArray={circleArray}
-          crossArray={crossArray}
-          setCircleArray={setCircleArray}
-          setCrossArray={setCrossArray}
-          disable={disable}
-          setDisable={setDisable}
-          winMsg={winMsg}
+            key={num}
+            id={num}
+            count={count}
+            setCountUp={setCountUp}
+            isMark={isMark}
+            setIsMark={setIsMark}
+            circleArray={circleArray}
+            crossArray={crossArray}
+            setCircleArray={setCircleArray}
+            setCrossArray={setCrossArray}
+            disable={disable}
+            setDisable={setDisable}
+            winMsg={winMsg}
           />
         ))}
       </div>

@@ -39,10 +39,7 @@ export const Cell = ({
   // let circleArray: number[] = []
   // let crossArray: number[] = []
   const handleClick = () => {
-    if (isMark === null) {
-      {
-        count % 2 === 0 ? setIsMark('circle') : setIsMark('cross');
-      }
+    if (!circleArray.includes(id) && !crossArray.includes(id)) {
 
       if (count % 2 === 0) {
         setCircleArray([...circleArray, id]);
@@ -50,7 +47,7 @@ export const Cell = ({
         setCrossArray([...crossArray, id]);
       }
       countUp();
-    } else if (isMark === 'circle' || isMark === 'cross') {
+    } else if (circleArray.includes(id) || crossArray.includes(id)) {
       alert('そこには置くことができません');
     }
   };
@@ -62,18 +59,27 @@ export const Cell = ({
   return (
     <button className="cell" disabled={disable} onClick={handleClick} style={{ overflow: 'hidden', background: '' }}>
       <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {isMark === 'circle' ? (
+        {/* {isMark === 'circle' ? (
           <img src={circle} alt="" style={{ width: '100%' }} />
         ) : (
           isMark === 'cross' && <img src={cross} alt="" style={{ width: '100%' }} />
-        )}
+        )} */}
 
         {/* <img
-          src={circleArray.includes(id) ? circle : crossArray.includes(id) ? cross : ''}
+          src={circleArray.includes(id) ? circle : crossArray.includes(id) ? cross : }
           // src={isMark === 'circle' ? circle : isMark === 'cross' ? cross : ''}
           alt=""
           style={{ width: '100%', height: '100%' }}
         /> */}
+        
+        {circleArray.includes(id) ? (
+          <img src={circle} alt="" style={{ width: '100%', height: '100%' }} />
+        ) : crossArray.includes(id) ? (
+          <img src={cross} alt="" style={{ width: '100%', height: '100%' }} />
+        ) : (
+          <></>
+        )}
+
 
         {/* {id} */}
       </div>
