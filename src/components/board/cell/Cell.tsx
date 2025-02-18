@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './Cell.css';
-import { count } from 'console';
 import circle from '../../../circle.png';
 import cross from '../../../cross.png';
 
@@ -11,12 +10,26 @@ type cellProps = {
   setCountUp: React.Dispatch<React.SetStateAction<number>>;
   isMark: 'circle' | 'cross' | null;
   setIsMark: React.Dispatch<React.SetStateAction<'circle' | 'cross' | null>>;
-  circleArray: number[]
-  crossArray:number[]
-  setCircleArray:React.Dispatch<React.SetStateAction<number[]>>
-  setCrossArray:React.Dispatch<React.SetStateAction<number[]>>
+  circleArray: number[];
+  crossArray: number[];
+  setCircleArray: React.Dispatch<React.SetStateAction<number[]>>;
+  setCrossArray: React.Dispatch<React.SetStateAction<number[]>>;
+  disable: boolean;
+  setDisable: React.Dispatch<React.SetStateAction<boolean>>;
+  winMsg: string;
 };
-export const Cell = ({ id, count, setCountUp, isMark, setIsMark, circleArray, crossArray, setCircleArray, setCrossArray }: cellProps) => {
+export const Cell = ({
+  id,
+  count,
+  setCountUp,
+  isMark,
+  setIsMark,
+  circleArray,
+  crossArray,
+  setCircleArray,
+  setCrossArray,
+  disable,
+}: cellProps) => {
   [isMark, setIsMark] = useState<'circle' | 'cross' | null>(null);
 
   const countUp = () => {
@@ -40,14 +53,15 @@ export const Cell = ({ id, count, setCountUp, isMark, setIsMark, circleArray, cr
       alert('そこには置くことはできません');
     }
   };
-  
+
   useEffect(() => {
+
     setIsMark(null);
   }, [id]);
 
   console.log(id);
   return (
-    <button className="cell" disabled onClick={handleChange} style={{ overflow: 'hidden', background: '' }}>
+    <button className="cell" disabled={disable} onClick={handleChange} style={{ overflow: 'hidden', background: '' }}>
       <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {/* {isMark === 'circle' ? (
           <img src={circle} alt="" style={{ width: '100%' }} />

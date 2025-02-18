@@ -8,6 +8,7 @@ export const Board = () => {
   const [isMark, setIsMark] = useState<'circle' | 'cross' | null>(null);
   const [circleArray, setCircleArray] = useState<number[]>([]);
   const [crossArray, setCrossArray] = useState<number[]>([]);
+  const [disable, setDisable] = useState<boolean>(false)
 
   const [winMsg, setWinMsg] = useState<string>('');
 
@@ -37,6 +38,7 @@ export const Board = () => {
       console.log(resultCircle)
       if (resultCircle.includes(true)) {
         setWinMsg('○の勝ち');
+        setDisable(true)
         return;
       }
     }
@@ -52,6 +54,7 @@ export const Board = () => {
       console.log(resultCross)
       if (resultCross.includes(true)) {
         setWinMsg('×の勝ち');
+        setDisable(true)
         return;
       }
     }
@@ -80,6 +83,9 @@ export const Board = () => {
             crossArray={crossArray}
             setCircleArray={setCircleArray}
             setCrossArray={setCrossArray}
+            disable={disable}
+            setDisable={setDisable}
+            winMsg={winMsg}
           />
         ))}
       </div>
