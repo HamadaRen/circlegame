@@ -17,8 +17,6 @@ type cellProps = {
   disable: boolean;
   setDisable: React.Dispatch<React.SetStateAction<boolean>>;
   winMsg: string;
-  style:  React.CSSProperties | undefined
-  background: string
 };
 export const Cell = ({
   id,
@@ -31,7 +29,6 @@ export const Cell = ({
   setCircleArray,
   setCrossArray,
   disable,
-  background
 }: cellProps) => {
   [isMark, setIsMark] = useState<'circle' | 'cross' | null>(null);
 
@@ -54,44 +51,58 @@ export const Cell = ({
     }
   };
 
+  const isNextDeleteCircle = circleArray.length === 3 && circleArray[0] === id && count % 2 === 0;
+  const isNextDeleteCross = crossArray.length === 3 && crossArray[0] === id && count % 2 !== 0;
+
   // useEffect(() => {
   //   setIsMark(null);
   // }, [id]);
 
   return (
-    <button className="cell" disabled={disable} onClick={handleClick} style={{background}}>
-      <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {/* {isMark === 'circle' ? (
+    <>
+      <button className="cell" disabled={disable} onClick={handleClick} style={{ background: '' }}>
+        <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {/* {isMark === 'circle' ? (
           <img src={circle} alt="" style={{ width: '100%' }} />
         ) : (
           isMark === 'cross' && <img src={cross} alt="" style={{ width: '100%' }} />
         )} */}
 
-        {/* <img
+          {/* <img
           src={circleArray.includes(id) ? circle : crossArray.includes(id) ? cross : }
           // src={isMark === 'circle' ? circle : isMark === 'cross' ? cross : ''}
           alt=""
           style={{ width: '100%', height: '100%' }}
         /> */}
-        
-        {circleArray.length===3 && circleArray[0]===id ? (
-          <img src={circle} alt="" style={{ width: '100%', height: '100%', background:'red' }} />
-        ) :
-        crossArray.length===3 && crossArray[0]===id ? (
-          <img src={cross} alt="" style={{ width: '100%', height: '100%', background:'blue' }} />
-        ) :
-        circleArray.includes(id) ? (
-          <img src={circle} alt="" style={{ width: '100%', height: '100%' }} />
-        ) : crossArray.includes(id) ? (
-          <img src={cross} alt="" style={{ width: '100%', height: '100%' }} />
-        ) : (
-          <></>
-        )}
 
+          {/* {circleArray.length === 3 && circleArray[0] === id ? (
+            <img src={circle} alt="" style={{ width: '100%', height: '100%', background: 'red' }} />
+          ) : crossArray.length === 3 && crossArray[0] === id ? (
+            <img src={cross} alt="" style={{ width: '100%', height: '100%', background: 'blue' }} />
+          ) : circleArray.includes(id) ? (
+            <img src={circle} alt="" style={{ width: '100%', height: '100%' }} />
+          ) : crossArray.includes(id) ? (
+            <img src={cross} alt="" style={{ width: '100%', height: '100%' }} />
+          ) : (
+            <></>
+          )} */}
 
-        {/* {id} */}
-      </div>
-    </button>
+          {circleArray.includes(id) ? (
+            <img
+              src={circle}
+              alt=""
+              style={{ width: '100%', height: '100%', background: isNextDeleteCircle ? 'gray' : '' }}
+            />
+          ) : crossArray.includes(id) ? (
+            <img src={cross} alt="" style={{ width: '100%', height: '100%', background: isNextDeleteCross ? 'gray' : '' }} />
+          ) : (
+            <></>
+          )}
+
+          {/* {id} */}
+        </div>
+      </button>
+    </>
   );
 };
 
