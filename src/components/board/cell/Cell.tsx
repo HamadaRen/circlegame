@@ -17,6 +17,8 @@ type cellProps = {
   disable: boolean;
   setDisable: React.Dispatch<React.SetStateAction<boolean>>;
   winMsg: string;
+  style:  React.CSSProperties | undefined
+  background: string
 };
 export const Cell = ({
   id,
@@ -29,6 +31,7 @@ export const Cell = ({
   setCircleArray,
   setCrossArray,
   disable,
+  background
 }: cellProps) => {
   [isMark, setIsMark] = useState<'circle' | 'cross' | null>(null);
 
@@ -40,7 +43,6 @@ export const Cell = ({
   // let crossArray: number[] = []
   const handleClick = () => {
     if (!circleArray.includes(id) && !crossArray.includes(id)) {
-
       if (count % 2 === 0) {
         setCircleArray([...circleArray, id]);
       } else if (count % 2 !== 0) {
@@ -57,7 +59,7 @@ export const Cell = ({
   // }, [id]);
 
   return (
-    <button className="cell" disabled={disable} onClick={handleClick} style={{ overflow: 'hidden', background: '' }}>
+    <button className="cell" disabled={disable} onClick={handleClick} style={{background}}>
       <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {/* {isMark === 'circle' ? (
           <img src={circle} alt="" style={{ width: '100%' }} />
@@ -72,7 +74,13 @@ export const Cell = ({
           style={{ width: '100%', height: '100%' }}
         /> */}
         
-        {circleArray.includes(id) ? (
+        {circleArray.length===3 && circleArray[0]===id ? (
+          <img src={circle} alt="" style={{ width: '100%', height: '100%', background:'red' }} />
+        ) :
+        crossArray.length===3 && crossArray[0]===id ? (
+          <img src={cross} alt="" style={{ width: '100%', height: '100%', background:'blue' }} />
+        ) :
+        circleArray.includes(id) ? (
           <img src={circle} alt="" style={{ width: '100%', height: '100%' }} />
         ) : crossArray.includes(id) ? (
           <img src={cross} alt="" style={{ width: '100%', height: '100%' }} />

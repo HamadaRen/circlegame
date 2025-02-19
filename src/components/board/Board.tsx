@@ -9,6 +9,7 @@ export const Board = () => {
   const [crossArray, setCrossArray] = useState<number[]>([]);
   const [disable, setDisable] = useState<boolean>(false);
   const [winMsg, setWinMsg] = useState<string>('');
+  const [background, setBackground] = useState<string>('')
 
   let array: number[] = [];
   for (let num = 1; num <= 9; num++) {
@@ -37,14 +38,18 @@ export const Board = () => {
       // const num = circleArray[0];
       // setCircleArray((prev) => prev.filter((n) => n !== num));
     } else {
+      const headCircleArray = circleArray.slice(0,1)
+      
+      //1番古い要素を取得、これの背景を変更する
       const resultCircle = lines.map((numArray) => numArray.every((value) => circleArray.includes(value)));
       if (resultCircle.includes(true)) {
         setWinMsg('○の勝ち');
         setDisable(true);
         return;
       }
+      console.log(headCircleArray)
     }
-
+    
     // const resultCircle = lines[0].every((num) => circleArray.includes(num));
     if (crossArray.length <= 2) {
       return;
@@ -88,8 +93,8 @@ export const Board = () => {
             disable={disable}
             setDisable={setDisable}
             winMsg={winMsg}
-          />
-        ))}
+            background={background} style={undefined}  />
+        ))} 
       </div>
       {winMsg && <h1>{winMsg}</h1>}
     </>
